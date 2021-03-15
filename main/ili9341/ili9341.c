@@ -20,8 +20,8 @@
 #define MADCTL_MH  0x04  ///< LCD refresh right to left
 
 
-//#define TTGO_V12	// Ревизия платы TTGO v1.2
-#define TTGO_V13	// Ревизия платы TTGO v1.3
+//#define TTGO_V12	// Board version TTGO v1.2
+#define TTGO_V13	// Board version TTGO v1.3
 
 #ifdef TTGO_V12
 #define PIN_MISO 	12
@@ -30,7 +30,7 @@
 #define PIN_CS   	27
 #define PIN_DC   	26
 #define PIN_RST  	5
-#define PIN_BL		4	// Управление подсветкой
+#define PIN_BL		4	// Highlit bit
 #endif
 
 #ifdef TTGO_V13
@@ -40,7 +40,7 @@
 #define PIN_CS   	27
 #define PIN_DC   	32
 #define PIN_RST  	5
-#define PIN_BL		4	// Управление подсветкой
+#define PIN_BL		4	// Hightlit bit
 #endif
 
 // The LCD needs a bunch of command/argument values to be initialized. They are stored in this struct.
@@ -168,7 +168,7 @@ void lcd_spi_pre_transfer_callback(spi_transaction_t *t)
 
 
 //==============================================================================
-// Установка окна на дисплее, которое будем заполнять
+// Set windows size for memory
 //==============================================================================
 void ili9341_setWindow(uint16_t x, uint16_t y, uint16_t x_end, uint16_t y_end)
 {
@@ -194,7 +194,7 @@ void ili9341_setWindow(uint16_t x, uint16_t y, uint16_t x_end, uint16_t y_end)
 
 
 //==============================================================================
-// Установка направления заполнения дисплея
+//Set fill direction
 //==============================================================================
 void ili9341_setRotation(uint8_t m)
 {
@@ -230,7 +230,7 @@ void ili9341_setRotation(uint8_t m)
 
 
 //==============================================================================
-// Процедура управления подсветкой
+// Sceen Highlight procedure
 //==============================================================================
 void ili9341_SetBL(uint8_t value)
 {
@@ -245,7 +245,7 @@ void ili9341_SetBL(uint8_t value)
 
 
 //==============================================================================
-// Инициализация интерфейса дисплея и отправка команд инициализации
+// Display initialisation
 //==============================================================================
 static void lcd_init()
 {
@@ -280,14 +280,14 @@ static void lcd_init()
         cmd++;
     }
 
-    // Включаем подсветку
+    // turn on light for screen
     ili9341_SetBL(100);
 }
 //==============================================================================
 
 
 //==============================================================================
-// Инициализация дисплея
+// Display initialization
 //==============================================================================
 void ili9341_init(uint16_t width, uint16_t height)
 {
@@ -334,7 +334,7 @@ void ili9341_init(uint16_t width, uint16_t height)
 
 
 //==============================================================================
-// Процедура смены порядка байт в 2-байтном слове
+// Procedure of changing the order of bytes in a 2-byte word
 //==============================================================================
 static void SwapBytes(uint16_t *color)
 {
@@ -347,7 +347,7 @@ static void SwapBytes(uint16_t *color)
 #if (ILI9341_MODE == ILI9341_DIRECT_MODE)
 
 //==============================================================================
-// Процедура окрашивает 1 пиксель дисплея
+// The procedure stains 1 pixel of the display
 //==============================================================================
 void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color)
 {
@@ -363,7 +363,7 @@ void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color)
 
 
 //==============================================================================
-// Процедура заполнения прямоугольника цветом color
+// The procedure for filling the rectangle with color
 //==============================================================================
 void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
@@ -390,7 +390,7 @@ void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color
 
 #if (ILI9341_MODE == ILI9341_BUFFER_MODE)
 //==============================================================================
-// Процедура окрашивает 1 пиксель в буфере кадра дисплея
+//The procedure paints 1 pixel in the display frame buffer
 //==============================================================================
 void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color)
 {
@@ -405,7 +405,7 @@ void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color)
 
 
 //==============================================================================
-// Процедура заполнения прямоугольника в буфере кадра цветом color
+// The procedure for filling a rectangle in the frame buffer with color color
 //==============================================================================
 void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
@@ -429,7 +429,7 @@ void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color
 
 
 //==============================================================================
-// Процедура обновляет дисплей из буфера кадра
+// Procedure updates the display from the frame buffer
 //==============================================================================
 void ili9341_update(void)
 {

@@ -4,8 +4,8 @@
 #include "driver/spi_master.h"
 
 
-#define ILI9341_DIRECT_MODE		0	// Режим прямого обращения к дисплею (без буфера кадра)
-#define ILI9341_BUFFER_MODE		1	// Режим внесения изменений в буфер кадра для последующей загрузки в дисплей
+#define ILI9341_DIRECT_MODE		0	// Direct-to-show mode (no frame buffer)
+#define ILI9341_BUFFER_MODE		1	// Mode to make changes to the frame buffer for later loading into the display
 
 #define ILI9341_MODE			ILI9341_BUFFER_MODE
 
