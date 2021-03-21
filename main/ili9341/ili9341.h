@@ -68,10 +68,36 @@
 #define ILI9341_GMCTRP1    0xE0     ///< Positive Gamma Correction
 #define ILI9341_GMCTRN1    0xE1     ///< Negative Gamma Correction
 
+// Define the list of supported screen and controllers
+#define DISPTYPE_st7789         0
+#define DISPTYPE_st7735         1
+#define DISPTYPE_ili9641        2
+
+// Define active type of screen for module disp1color
+#define DISPCOLOR_type         DISPTYPE_ili9641
+
+#define RGB565(r, g, b)         (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | ((b & 0xF8) >> 3))
+
+// Base colors
+#define BLACK    0x0000
+#define BLUE     0x001F
+#define RED      0xF800
+#define GREEN    0x07E0
+#define CYAN     0x07FF
+#define MAGENTA  0xF81F
+#define YELLOW   0xFFE0
+#define WHITE    0xFFFF
+
+
 void ili9341_init(uint16_t width, uint16_t height);
 void ili9341_SetBL(uint8_t value);
 void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color);
 void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
+void ili9341_FillScreen(uint16_t color);
+void ili9341_Update(void);
+void ili9341_DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color);
+void ili9341_DrawCircle(int16_t x0, int16_t y0, int16_t radius, uint16_t color);
+
 
 #if (ILI9341_MODE == ILI9341_BUFFER_MODE)
 void ili9341_update(void);
