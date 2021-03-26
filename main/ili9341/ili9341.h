@@ -94,7 +94,7 @@ void ili9341_SetBL(uint8_t value);
 void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color);
 void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
 void ili9341_FillScreen(uint16_t color);
-void ili9341_Update(void);
+//void ili9341_Update(void);
 void ili9341_DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color);
 void ili9341_DrawCircle(int16_t x0, int16_t y0, int16_t radius, uint16_t color);
 
