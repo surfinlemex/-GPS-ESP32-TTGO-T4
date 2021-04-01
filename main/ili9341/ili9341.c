@@ -389,9 +389,7 @@ void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color
 
 
 #if (ILI9341_MODE == ILI9341_BUFFER_MODE)
-//==============================================================================
 //The procedure paints 1 pixel in the display frame buffer
-//==============================================================================
 void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color)
 {
 	if ((x < 0) ||(x >= _width) || (y < 0) || (y >= _height))
@@ -401,12 +399,9 @@ void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color)
 
 	ScreenBuff[y * _width + x] = color;
 }
-//==============================================================================
 
 
-//==============================================================================
 // The procedure for filling a rectangle in the frame buffer with color color
-//==============================================================================
 void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
 	if ((w <= 0) || (h <= 0) || (x >= _width) || (y >= _height))
@@ -425,18 +420,16 @@ void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color
 			ScreenBuff[(y + row) * _width + x + col] = color;
 	}
 }
-//==============================================================================
 
 
-//==============================================================================
 // Procedure updates the display from the frame buffer
-//==============================================================================
 void ili9341_update(void)
 {
 	ili9341_setWindow(0, 0, ILI9341_TFTHEIGHT, ILI9341_TFTWIDTH);
 	lcd_data((uint8_t *) ScreenBuff, ILI9341_TFTHEIGHT * ILI9341_TFTWIDTH * 2);
 }
-//==============================================================================
+#endif
+
 
 void ili9341_FillScreen(uint16_t color){
 	ili9341_FillRect(0, 0, ILI9341_TFTHEIGHT, ILI9341_TFTWIDTH, color);
@@ -448,4 +441,3 @@ void ili9341_ClearScreen(void){
 }
 
 
-#endif
