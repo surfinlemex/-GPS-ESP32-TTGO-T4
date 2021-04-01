@@ -437,4 +437,15 @@ void ili9341_update(void)
 	lcd_data((uint8_t *) ScreenBuff, ILI9341_TFTHEIGHT * ILI9341_TFTWIDTH * 2);
 }
 //==============================================================================
+
+void ili9341_FillScreen(uint16_t color){
+	ili9341_FillRect(0, 0, ILI9341_TFTHEIGHT, ILI9341_TFTWIDTH, color);
+	ili9341_update();
+}
+
+void ili9341_ClearScreen(void){
+	ili9341_FillScreen(BLACK);
+}
+
+
 #endif
