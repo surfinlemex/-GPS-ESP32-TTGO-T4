@@ -119,9 +119,7 @@ DRAM_ATTR static const lcd_init_cmd_t ili_init_cmds[] =
 };
 
 
-//==============================================================================
 //Send a command to the LCD. Uses spi_device_transmit, which waits until the transfer is complete.
-//==============================================================================
 void lcd_cmd(const uint8_t cmd)
 {
     esp_err_t ret;
@@ -133,12 +131,9 @@ void lcd_cmd(const uint8_t cmd)
     ret = spi_device_transmit(_spi, &t);  //Transmit!
     assert(ret==ESP_OK);            //Should have had no issues.
 }
-//==============================================================================
 
 
-//==============================================================================
 //Send data to the LCD. Uses spi_device_transmit, which waits until the transfer is complete.
-//==============================================================================
 void lcd_data(const uint8_t *data, int len)
 {
     if (len == 0)
@@ -153,23 +148,17 @@ void lcd_data(const uint8_t *data, int len)
     ret = spi_device_transmit(_spi, &t);  //Transmit!
     assert(ret==ESP_OK);            //Should have had no issues.
 }
-//==============================================================================
 
 
-//==============================================================================
 // This function is called (in irq context!) just before a transmission starts. It will set the D/C line to the value indicated in the user field.
-//==============================================================================
 void lcd_spi_pre_transfer_callback(spi_transaction_t *t)
 {
     int dc = (int) t->user;
     gpio_set_level(PIN_DC, dc);
 }
-//==============================================================================
 
 
-//==============================================================================
 // Set windows size for memory
-//==============================================================================
 void ili9341_setWindow(uint16_t x, uint16_t y, uint16_t x_end, uint16_t y_end)
 {
     uint8_t Buff[4];
@@ -190,12 +179,9 @@ void ili9341_setWindow(uint16_t x, uint16_t y, uint16_t x_end, uint16_t y_end)
 
     lcd_cmd(ILI9341_RAMWR); // write to RAM
 }
-//==============================================================================
 
 
-//==============================================================================
 //Set fill direction
-//==============================================================================
 void ili9341_setRotation(uint8_t m)
 {
     rotation = m % 4; // can't be higher than 3
@@ -226,12 +212,9 @@ void ili9341_setRotation(uint8_t m)
     lcd_cmd(ILI9341_MADCTL);
     lcd_data(&m, 1);
 }
-//==============================================================================
 
 
-//==============================================================================
 // Sceen Highlight procedure
-//==============================================================================
 void ili9341_SetBL(uint8_t value)
 {
 #ifdef PIN_BL
@@ -241,12 +224,9 @@ void ili9341_SetBL(uint8_t value)
 		gpio_set_level(PIN_BL, 0);
 #endif
 }
-//==============================================================================
 
 
-//==============================================================================
 // Display initialisation
-//==============================================================================
 static void lcd_init()
 {
     int cmd = 0;
@@ -283,12 +263,9 @@ static void lcd_init()
     // turn on light for screen
     ili9341_SetBL(100);
 }
-//==============================================================================
 
 
-//==============================================================================
 // Display initialization
-//==============================================================================
 void ili9341_init(uint16_t width, uint16_t height)
 {
 	_width = width;
@@ -330,25 +307,19 @@ void ili9341_init(uint16_t width, uint16_t height)
 
   ili9341_setRotation(1);
 }
-//==============================================================================
 
 
-//==============================================================================
 // Procedure of changing the order of bytes in a 2-byte word
-//==============================================================================
 static void SwapBytes(uint16_t *color)
 {
 	uint8_t temp = *color >> 8;
 	*color = (*color << 8) | temp;
 }
-//==============================================================================
 
 
 #if (ILI9341_MODE == ILI9341_DIRECT_MODE)
 
-//==============================================================================
 // The procedure stains 1 pixel of the display
-//==============================================================================
 void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color)
 {
 	if ((x < 0) ||(x >= _width) || (y < 0) || (y >= _height))
@@ -359,12 +330,9 @@ void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color)
 	ili9341_setWindow(x, y, x, y);
 	lcd_data((uint8_t *) &color, 2);
 }
-//==============================================================================
 
 
-//==============================================================================
 // The procedure for filling the rectangle with color
-//==============================================================================
 void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
 	if ((w <= 0) || (h <= 0) || (x >= _width) || (y >= _height))
@@ -384,7 +352,6 @@ void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color
 	ili9341_setWindow(x, y, x + w - 1, y + h - 1);
 	lcd_data((uint8_t *) Buff, w * h * 2);
 }
-//==============================================================================
 #endif
 
 

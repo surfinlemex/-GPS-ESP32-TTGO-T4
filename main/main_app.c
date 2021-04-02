@@ -9,22 +9,22 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 #include "esp32/spiram.h"
-#include "display/dispcolor.h"
-#include "display/dispcolor.c"
-#include "display/rgbcolor.h"
-#include "display/fonts/font.h"
-#include "display/fonts/font.c"
-#include "display/fonts/f6x8m.h"
-#include "display/fonts/f16f.h"
-#include "display/fonts/f24f.h"
-#include "display/fonts/f32f.h"
-#include "display/fonts/f6x8m.c"
-#include "display/fonts/f16f.c"
-#include "display/fonts/f24f.c"
-#include "display/fonts/f32f.c"
+//#include "display/dispcolor.h"
+//#include "display/dispcolor.c"
+//#include "display/rgbcolor.h"
+//#include "display/fonts/font.h"
+//#include "display/fonts/font.c"
+//#include "display/fonts/f6x8m.h"
+//#include "display/fonts/f16f.h"
+//#include "display/fonts/f24f.h"
+//#include "display/fonts/f32f.h"
+//#include "display/fonts/f6x8m.c"
+//#include "display/fonts/f16f.c"
+//#include "display/fonts/f24f.c"
+//#include "display/fonts/f32f.c"
 #include "ili9341/ili9341.h"
 #include "ili9341/ili9341.c"
-#include "spiram_psram.h"
+//#include "spiram_psram.h"
 #include "esp32/himem.h"
 
 
@@ -91,13 +91,13 @@ void RenderResults(uint8_t mode)
 //
 void app_main()
 {
-   int result;
+ //  int result;
    buttons_init();
 
    printf("Display init\n");
-   dispcolor_Init(dispWidth, dispHeight);
-   dispcolor_SetBrightness(100);
+  // dispcolor_Init(dispWidth, dispHeight);
+  // dispcolor_SetBrightness(100);
 
-    dispcolor_Update();
+//    dispcolor_Update();
     vTaskDelay(20 / portTICK_RATE_MS);
 }
