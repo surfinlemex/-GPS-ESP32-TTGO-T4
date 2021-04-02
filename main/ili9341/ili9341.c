@@ -409,7 +409,7 @@ void ili9341_ClearScreen(void){
 
 
 
-static void ili9341__DrawLine_Slow(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color)
+static void ili9341_DrawLine_Slow(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color)
 {
   const int16_t deltaX = abs(x2 - x1);
   const int16_t deltaY = abs(y2 - y1);
@@ -422,7 +422,7 @@ static void ili9341__DrawLine_Slow(int16_t x1, int16_t y1, int16_t x2, int16_t y
 
   while (x1 != x2 || y1 != y2)
   {
-    ili9341__DrawPixel(x1, y1, color);
+    ili9341_DrawPixel(x1, y1, color);
     const int16_t error2 = error * 2;
 
     if (error2 > -deltaY)
