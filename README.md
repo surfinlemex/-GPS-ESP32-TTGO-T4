@@ -18,4 +18,5 @@ Specifications:
     Battery cable included
     Dimensions PCB: 65.9x40.8mm
 
-![image](https://fsymbols.com/images/ascii.png)
+ASCII for Fonts
+![image](https://user-images.githubusercontent.com/31878095/113403478-8b047700-93c8-11eb-945d-d2453c8c6a79.png)
