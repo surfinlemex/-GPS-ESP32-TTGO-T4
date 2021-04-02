@@ -408,3 +408,92 @@ void ili9341_ClearScreen(void){
 }
 
 
+
+static void ili9341__DrawLine_Slow(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color)
+{
+  const int16_t deltaX = abs(x2 - x1);
+  const int16_t deltaY = abs(y2 - y1);
+  const int16_t signX = x1 < x2 ? 1 : -1;
+  const int16_t signY = y1 < y2 ? 1 : -1;
+
+  int16_t error = deltaX - deltaY;
+
+  ili9341_DrawPixel(x2, y2, color);
+
+  while (x1 != x2 || y1 != y2)
+  {
+    ili9341__DrawPixel(x1, y1, color);
+    const int16_t error2 = error * 2;
+
+    if (error2 > -deltaY)
+    {
+      error -= deltaY;
+      x1 += signX;
+    }
+    if (error2 < deltaX)
+    {
+      error += deltaX;
+      y1 += signY;
+    }
+  }
+}
+
+
+void ili9341_DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color){
+  if (x1 == x2)
+  {
+    if (y1 > y2)
+       ili9341_FillRect(x1, y2, 1, y1 - y2 + 1, color);
+    else
+       ili9341_FillRect(x1, y1, 1, y2 - y1 + 1, color);
+    return;
+  }
+
+  if (y1 == y2)
+  {
+    if (x1 > x2)
+       ili9341_FillRect(x2, y1, x1 - x2 + 1, 1, color);
+    else
+       ili9341_FillRect(x1, y1, x2 - x1 + 1, 1, color);
+    return;
+  }
+
+  ili9341_DrawLine_Slow(x1, y1, x2, y2, color);
+
+}
+
+void ili9341_DrawCircle(int16_t x0, int16_t y0, int16_t radius, uint16_t color){
+  int x = 0;
+  int y = radius;
+  int delta = 1 - 2 * radius;
+  int error = 0;
+
+  while (y >= 0)
+  {
+	ili9341_DrawPixel(x0 + x, y0 + y, color);
+	ili9341_DrawPixel(x0 + x, y0 - y, color);
+	ili9341_DrawPixel(x0 - x, y0 + y, color);
+	ili9341_DrawPixel(x0 - x, y0 - y, color);
+    error = 2 * (delta + y) - 1;
+
+    if (delta < 0 && error <= 0)
+    {
+      ++x;
+      delta += 2 * x + 1;
+      continue;
+    }
+
+    error = 2 * (delta - x) - 1;
+
+    if (delta > 0 && error > 0)
+    {
+      --y;
+      delta += 1 - 2 * y;
+      continue;
+    }
+
+    ++x;
+    delta += 2 * (x - y);
+    --y;
+  }
+}
