@@ -497,3 +497,23 @@ void ili9341_DrawCircle(int16_t x0, int16_t y0, int16_t radius, uint16_t color){
     --y;
   }
 }
+
+void ili9341_DrawRectangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color)
+{
+  ili9341_DrawLine(x1, y1, x1, y2, color);
+  ili9341_DrawLine(x2, y1, x2, y2, color);
+  ili9341_DrawLine(x1, y1, x2, y1, color);
+  ili9341_DrawLine(x1, y2, x2, y2, color);
+}
+
+
+void ili9341_DrawRectangleFilled(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t fillcolor)
+{
+  if (x1 > x2)
+    SwapInt16Values(&x1, &x2);
+  if (y1 > y2)
+    SwapInt16Values(&y1, &y2);
+
+  ili9341_FillRect(x1, y1, x2 - x1 + 1, y2 - y1 + 1, fillcolor);
+}
+

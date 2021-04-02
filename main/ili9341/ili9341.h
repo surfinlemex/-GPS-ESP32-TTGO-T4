@@ -97,7 +97,8 @@ void ili9341_FillScreen(uint16_t color);
 void ili9341_ClearScreen(void);
 void ili9341_DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color);
 void ili9341_DrawCircle(int16_t x0, int16_t y0, int16_t radius, uint16_t color);
-
+void ili9341_DrawRectangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color);
+void ili9341_DrawRectangleFilled(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t fillcolor);
 
 #if (ILI9341_MODE == ILI9341_BUFFER_MODE)
 void ili9341_update(void);
