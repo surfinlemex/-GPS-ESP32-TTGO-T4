@@ -17,3 +17,5 @@ Specifications:
     Battery connector: 2p Molex Picoblade
     Battery cable included
     Dimensions PCB: 65.9x40.8mm
+
+![image](https://fsymbols.com/images/ascii.png)
