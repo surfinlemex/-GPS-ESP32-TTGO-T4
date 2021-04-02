@@ -57,6 +57,14 @@ static spi_device_handle_t _spi;
 static uint8_t rotation = 0;
 static uint16_t _width, _height;
 
+static void SwapInt16Values(int16_t *pValue1, int16_t *pValue2)
+{
+  int16_t TempValue = *pValue1;
+  *pValue1 = *pValue2;
+  *pValue2 = TempValue;
+}
+
+
 
 DRAM_ATTR static const lcd_init_cmd_t ili_init_cmds[] =
 {
@@ -497,6 +505,43 @@ void ili9341_DrawCircle(int16_t x0, int16_t y0, int16_t radius, uint16_t color){
     --y;
   }
 }
+
+void ili9341_DrawCircleFilled(int16_t x0, int16_t y0, int16_t radius, uint16_t fillcolor)
+{
+  int x = 0;
+  int y = radius;
+  int delta = 1 - 2 * radius;
+  int error = 0;
+
+  while (y >= 0)
+  {
+    ili9341_DrawLine(x0 + x, y0 - y, x0 + x, y0 + y, fillcolor);
+    ili9341_DrawLine(x0 - x, y0 - y, x0 - x, y0 + y, fillcolor);
+    error = 2 * (delta + y) - 1;
+
+    if (delta < 0 && error <= 0)
+    {
+      ++x;
+      delta += 2 * x + 1;
+      continue;
+    }
+
+    error = 2 * (delta - x) - 1;
+
+    if (delta > 0 && error > 0)
+    {
+      --y;
+      delta += 1 - 2 * y;
+      continue;
+    }
+
+    ++x;
+    delta += 2 * (x - y);
+    --y;
+  }
+}
+
+
 
 void ili9341_DrawRectangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color)
 {
