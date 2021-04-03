@@ -95,8 +95,9 @@ void app_main()
    buttons_init();
 
    printf("Display init\n");
-  // dispcolor_Init(dispWidth, dispHeight);
-  // dispcolor_SetBrightness(100);
+   ili9341_init(dispWidth, dispHeight);
+   ili9341_SetBL(100);
+   ili9341_FillScreen(GREEN);
 
 //    dispcolor_Update();
     vTaskDelay(20 / portTICK_RATE_MS);
