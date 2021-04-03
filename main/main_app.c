@@ -93,7 +93,7 @@ void app_main()
 {
  //  int result;
    buttons_init();
-
+   osKernelStart();
    printf("Display init\n");
    ili9341_init(dispWidth, dispHeight);
    ili9341_SetBL(100);
