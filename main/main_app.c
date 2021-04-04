@@ -11,7 +11,6 @@
 #include "esp32/spiram.h"
 #include "ili9341/ili9341.h"
 #include "ili9341/ili9341.c"
-//#include "spiram_psram.h"
 #include "esp32/himem.h"
 
 
@@ -69,17 +68,23 @@ void buttons_init()
 	gpio_pullup_en(PIN_BUTTON3);
 }
 
-void RenderPlot(uint8_t mode)
+void fetchButtontask(void * params)
 {
+  struct sButtonStates ButtonStates;
+  while (true)
+  {
+    ButtonStates.button1 = gpio_get_level(PIN_BUTTON1);
+    ButtonStates.button2 = gpio_get_level(PIN_BUTTON2);
+    ButtonStates.button3 = gpio_get_level(PIN_BUTTON3);
+
+    printf("waiting for button press %s\n", (char *) params);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+  }
 }
 
-void RenderResults(uint8_t mode)
-{
-}
-//
+
 void app_main()
 {
-   struct sButtonStates ButtonStates;
    buttons_init();
 
    printf("Display init\n");
@@ -89,11 +94,8 @@ void app_main()
 
     while (1)
     {
-    	ButtonStates.button1 = gpio_get_level(PIN_BUTTON1);
-    	ButtonStates.button2 = gpio_get_level(PIN_BUTTON2);
-    	ButtonStates.button3 = gpio_get_level(PIN_BUTTON3);
 
-
+	xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL);
    	vTaskDelay(20 / portTICK_RATE_MS);
    }
 }
