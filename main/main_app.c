@@ -79,6 +79,7 @@ void RenderResults(uint8_t mode)
 //
 void app_main()
 {
+   struct sButtonStates ButtonStates;
    buttons_init();
 
    printf("Display init\n");
@@ -93,7 +94,6 @@ void app_main()
     	ButtonStates.button3 = gpio_get_level(PIN_BUTTON3);
 
 
-//    dispcolor_Update();
    	vTaskDelay(20 / portTICK_RATE_MS);
    }
 }
