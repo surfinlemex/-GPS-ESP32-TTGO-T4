@@ -9,19 +9,6 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 #include "esp32/spiram.h"
-//#include "display/dispcolor.h"
-//#include "display/dispcolor.c"
-//#include "display/rgbcolor.h"
-//#include "display/fonts/font.h"
-//#include "display/fonts/font.c"
-//#include "display/fonts/f6x8m.h"
-//#include "display/fonts/f16f.h"
-//#include "display/fonts/f24f.h"
-//#include "display/fonts/f32f.h"
-//#include "display/fonts/f6x8m.c"
-//#include "display/fonts/f16f.c"
-//#include "display/fonts/f24f.c"
-//#include "display/fonts/f32f.c"
 #include "ili9341/ili9341.h"
 #include "ili9341/ili9341.c"
 //#include "spiram_psram.h"
@@ -45,9 +32,9 @@
 
 struct sButtonStates
 {
-	uint8_t	button1 	:1;
-	uint8_t	button2 	:1;
-	uint8_t	button3 	:1;
+	uint8_t	button1     :1;
+	uint8_t	button2     :1;
+	uint8_t	button3     :1;
 	uint8_t	button1_old :1;
 	uint8_t	button2_old :1;
 	uint8_t	button3_old :1;
@@ -59,6 +46,7 @@ typedef enum Mode
 	SelectRate = 1,
 	SelectLedCurrent = 2
 } eMode;
+
 #define ButtonsModeNum		3
 eMode ButtonsMode = SelectMode;
 
@@ -91,9 +79,8 @@ void RenderResults(uint8_t mode)
 //
 void app_main()
 {
- //  int result;
    buttons_init();
-   osKernelStart();
+
    printf("Display init\n");
    ili9341_init(dispWidth, dispHeight);
    ili9341_SetBL(100);
