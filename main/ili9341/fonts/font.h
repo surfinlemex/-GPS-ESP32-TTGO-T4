@@ -1,25 +1,17 @@
-//------------------------------------------------------------------------------
-// This is Open source software. You can place this code on your site, but don't
-// forget a link to my YouTube-channel: https://www.youtube.com/channel/UChButpZaL5kUUl_zTyIDFkQ
-// Это программное обеспечение распространяется свободно. Вы можете размещать
-// его на вашем сайте, но не забудьте указать ссылку на мой YouTube-канал
-// "Электроника в объектике" https://www.youtube.com/channel/UChButpZaL5kUUl_zTyIDFkQ
-// Автор: Надыршин Руслан / Nadyrshin Ruslan
-//------------------------------------------------------------------------------
 #ifndef _FONTS_H
 #define _FONTS_H
 
 #include "esp_system.h"
 
 
-// Список ID шрифтов
+//The list of font ID
 #define FONTID_6X8M  0
 #define FONTID_16F   1
 #define FONTID_24F   2
 #define FONTID_32F   3
 
 
-// Константы, позволяющие в файлах шрифтов отображать символы в читаемом виде
+// Binary code matrix
 #define	________	0x0
 #define	_______X	0x1
 #define	______X_	0x2
@@ -278,15 +270,14 @@
 #define	XXXXXXXX	0xff
 
 
-// Тип, содержащий указатель на функцию GetCharTable у шрифтов
+//Type that contains a pointer to GetCharTable at fonts
 typedef uint8_t *(*t_font_getchar)(uint8_t Char);
 
-
-// Функция возвращает указатель на структуру, описывающую символ Char
+//The function returns a pointer to the structure that describes the Char symbol
 uint8_t *font_GetFontStruct(uint8_t FontID, uint8_t Char);
-// Функция возвращает ширину символа
+//The function returns the width of the character
 uint8_t font_GetCharWidth(uint8_t *pCharTable);
-// Функция возвращает высоту символа
+// The function returns the height of the symbol
 uint8_t font_GetCharHeight(uint8_t *pCharTable);
 
 #endif

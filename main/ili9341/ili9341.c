@@ -562,3 +562,178 @@ void ili9341_DrawRectangleFilled(int16_t x1, int16_t y1, int16_t x2, int16_t y2,
   ili9341_FillRect(x1, y1, x2 - x1 + 1, y2 - y1 + 1, fillcolor);
 }
 
+static uint8_t ili9341_DrawChar_General(int16_t X, int16_t Y, uint8_t FontID,
+                                          uint8_t Char, uint16_t TextColor,
+                                          uint16_t BgColor, uint8_t TransparentBg)
+{
+  uint8_t *pCharTable = font_GetFontStruct(FontID, Char);
+  uint8_t CharWidth = font_GetCharWidth(pCharTable);    // ...... .......
+  uint8_t CharHeight = font_GetCharHeight(pCharTable);  // ...... .......
+  pCharTable += 2;
+
+  if (FontID == FONTID_6X8M)
+  {
+    for (uint8_t row = 0; row < CharHeight; row++)
+    {
+      for (uint8_t col = 0; col < CharWidth; col++)
+      {
+        if (pCharTable[row] & (1 << (7 - col)))
+          ili9341_DrawPixel(X + col, Y + row, TextColor);
+        else if (!TransparentBg)
+          ili9341_DrawPixel(X + col, Y + row, BgColor);
+      }
+    }
+  }
+  else
+  {
+    for (uint8_t row = 0; row < CharHeight; row++)
+    {
+      for (uint8_t col = 0; col < CharWidth; col++)
+      {
+        if (col < 8)
+        {
+          if (pCharTable[row * 2] & (1 << (7 - col)))
+            ili9341_DrawPixel(X + col, Y + row, TextColor);
+          else if (!TransparentBg)
+            ili9341_DrawPixel(X + col, Y + row, BgColor);
+        }
+        else
+        {
+          if (pCharTable[(row * 2) + 1] & (1 << (15 - col)))
+            ili9341_DrawPixel(X + col, Y + row, TextColor);
+          else if (!TransparentBg)
+            ili9341_DrawPixel(X + col, Y + row, BgColor);
+        }
+      }
+    }
+  }
+
+  return CharWidth;
+}
+
+uint8_t ili9341_DrawChar(int16_t X, int16_t Y, uint8_t FontID, uint8_t Char,
+                           uint16_t TextColor)
+{
+  return ili9341_DrawChar_General(X, Y, FontID, Char, TextColor, 0, 1);
+}
+
+
+uint8_t ili9341_DrawChar_Bg(int16_t X, int16_t Y, uint8_t FontID, uint8_t Char,
+                              uint16_t TextColor, uint16_t BgColor)
+{
+  return ili9341_DrawChar_General(X, Y, FontID, Char, TextColor, BgColor, 0);
+}
+
+
+static int16_t ili9341_DrawString_General(int16_t X, int16_t Y, uint8_t FontID,
+                                         uint8_t *Str, uint16_t TextColor,
+                                         uint16_t BgColor, uint8_t TransparentBg)
+{
+  uint8_t done = 0;             // .... ......... ......
+  int16_t Xstart = X;           // .......... .... ..... .......... ....... ... ........ .. ..... ......
+  uint8_t StrHeight = 8;        // ...... ........ . ........ ... ........ .. ......... ......
+
+  // ..... ......
+  while (!done)
+  {
+    switch (*Str)
+    {
+    case '\0':  // ..... ......
+      done = 1;
+      break;
+    case '\n':  // ....... .. ......... ......
+      Y += StrHeight;
+      break;
+    case '\r':  // ....... . ...... ......
+      X = Xstart;
+      break;
+    default:    // ............ ......
+      if (TransparentBg)
+        X += ili9341_DrawChar(X, Y, FontID, *Str, TextColor);
+      else
+        X += ili9341_DrawChar_Bg(X, Y, FontID, *Str, TextColor, BgColor);
+
+      StrHeight = font_GetCharHeight(font_GetFontStruct(FontID, *Str));
+      break;
+    }
+    Str++;
+  }
+  return X;
+}
+
+int16_t ili9341_DrawString(int16_t X, int16_t Y, uint8_t FontID, uint8_t *Str, uint16_t TextColor)
+{
+  return ili9341_DrawString_General(X, Y, FontID,  Str, TextColor, 0, 1);
+}
+
+
+int16_t ili9341_DrawString_Bg(int16_t X, int16_t Y, uint8_t FontID, uint8_t *Str, uint16_t TextColor, uint16_t BgColor)
+{
+  return ili9341_DrawString_General(X, Y, FontID,  Str, TextColor, BgColor, 0);
+}
+
+
+int16_t ili9341_printf(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextColor, const char *args, ...)
+{
+  char StrBuff[256];
+
+  va_list ap;
+  va_start(ap, args);
+  vsnprintf(StrBuff, sizeof(StrBuff), args, ap);
+  va_end(ap);
+
+  return ili9341_DrawString(X, Y, FontID, (uint8_t *)StrBuff, TextColor);
+}
+
+
+int16_t ili9341_printf_Bg(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextColor, uint16_t BgColor, const char *args, ...)
+{
+  char StrBuff[256];
+
+  va_list ap;
+  va_start(ap, args);
+  vsnprintf(StrBuff, sizeof(StrBuff), args, ap);
+  va_end(ap);
+
+  return ili9341_DrawString_Bg(X, Y, FontID, (uint8_t *)StrBuff, TextColor, BgColor);
+}
+
+int16_t dispcolor_getStrWidth(uint8_t FontID, char *Str)
+{
+	uint8_t done = 0;       // .... ......... ......
+	int16_t StrWidth = 0;  >// ...... ...... . ........
+
+// ..... ......
+while (!done)
+{
+	switch (*Str)
+    {
+    case '\0':  // ..... ......
+       done = 1;
+        break;
+    case '\n':  // ....... .. ......... ......
+    case '\r':  // ....... . ...... ......
+        break;
+    default:    // ............ ......
+        StrWidth += font_GetCharWidth(font_GetFontStruct(FontID, *Str));
+        break;
+    }
+	Str++;
+}
+
+return StrWidth;
+}
+
+
+int16_t dispcolor_getFormatStrWidth(uint8_t FontID, const char *args, ...)
+{
+  char StrBuff[256];
+
+  va_list ap;
+  va_start(ap, args);
+  vsnprintf(StrBuff, sizeof(StrBuff), args, ap);
+  va_end(ap);
+
+  return dispcolor_getStrWidth(FontID, StrBuff);
+}
+
