@@ -86,6 +86,14 @@ void app_main()
    ili9341_SetBL(100);
    ili9341_FillScreen(GREEN);
 
+    while (1)
+    {
+    	ButtonStates.button1 = gpio_get_level(PIN_BUTTON1);
+    	ButtonStates.button2 = gpio_get_level(PIN_BUTTON2);
+    	ButtonStates.button3 = gpio_get_level(PIN_BUTTON3);
+
+
 //    dispcolor_Update();
-    vTaskDelay(20 / portTICK_RATE_MS);
+   	vTaskDelay(20 / portTICK_RATE_MS);
+   }
 }
