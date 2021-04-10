@@ -673,7 +673,7 @@ int16_t ili9341_DrawString_Bg(int16_t X, int16_t Y, uint8_t FontID, uint8_t *Str
 }
 
 
-int16_t ili9341_printf(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextColor, const char *args, ...)
+int16_t ili9341_TextOutput(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextColor, const char *args, ...)
 {
   char StrBuff[256];
 
@@ -686,7 +686,7 @@ int16_t ili9341_printf(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextColor,
 }
 
 
-int16_t ili9341_printf_Bg(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextColor, uint16_t BgColor, const char *args, ...)
+int16_t ili9341_TextOutput_Bg(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextColor, uint16_t BgColor, const char *args, ...)
 {
   char StrBuff[256];
 
@@ -698,10 +698,10 @@ int16_t ili9341_printf_Bg(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextCol
   return ili9341_DrawString_Bg(X, Y, FontID, (uint8_t *)StrBuff, TextColor, BgColor);
 }
 
-int16_t dispcolor_getStrWidth(uint8_t FontID, char *Str)
+int16_t ili9341_getStrWidth(uint8_t FontID, char *Str)
 {
 	uint8_t done = 0;       // .... ......... ......
-	int16_t StrWidth = 0;  >// ...... ...... . ........
+	int16_t StrWidth = 0;  // ...... ...... . ........
 
 // ..... ......
 while (!done)
@@ -725,7 +725,7 @@ return StrWidth;
 }
 
 
-int16_t dispcolor_getFormatStrWidth(uint8_t FontID, const char *args, ...)
+int16_t ili9341_getFormatStrWidth(uint8_t FontID, const char *args, ...)
 {
   char StrBuff[256];
 
@@ -734,6 +734,6 @@ int16_t dispcolor_getFormatStrWidth(uint8_t FontID, const char *args, ...)
   vsnprintf(StrBuff, sizeof(StrBuff), args, ap);
   va_end(ap);
 
-  return dispcolor_getStrWidth(FontID, StrBuff);
+  return ili9341_getStrWidth(FontID, StrBuff);
 }
 
