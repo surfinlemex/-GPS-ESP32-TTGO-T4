@@ -6,6 +6,7 @@
 #include "freertos/task.h"
 #include "console/console.h"
 #include "console/console.c"
+#include "ili9341/fonts/font.h"
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 #include "esp32/spiram.h"
@@ -91,6 +92,7 @@ void app_main()
    ili9341_init(dispWidth, dispHeight);
    ili9341_SetBL(100);
    ili9341_FillScreen(GREEN);
+   ili9341_TextOutput(20, 20, 0, BLACK, "Hello world!!!");
 
     while (1)
     {

@@ -8,7 +8,7 @@
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 #include "ili9341.h"
-
+#include "fonts/font.h"
 
 
 #define MADCTL_MY  0x80  ///< Bottom to top
