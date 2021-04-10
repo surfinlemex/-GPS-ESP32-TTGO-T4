@@ -9,22 +9,8 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 #include "esp32/spiram.h"
-//#include "display/dispcolor.h"
-//#include "display/dispcolor.c"
-//#include "display/rgbcolor.h"
-//#include "display/fonts/font.h"
-//#include "display/fonts/font.c"
-//#include "display/fonts/f6x8m.h"
-//#include "display/fonts/f16f.h"
-//#include "display/fonts/f24f.h"
-//#include "display/fonts/f32f.h"
-//#include "display/fonts/f6x8m.c"
-//#include "display/fonts/f16f.c"
-//#include "display/fonts/f24f.c"
-//#include "display/fonts/f32f.c"
 #include "ili9341/ili9341.h"
 #include "ili9341/ili9341.c"
-//#include "spiram_psram.h"
 #include "esp32/himem.h"
 
 
@@ -45,9 +31,9 @@
 
 struct sButtonStates
 {
-	uint8_t	button1 	:1;
-	uint8_t	button2 	:1;
-	uint8_t	button3 	:1;
+	uint8_t	button1     :1;
+	uint8_t	button2     :1;
+	uint8_t	button3     :1;
 	uint8_t	button1_old :1;
 	uint8_t	button2_old :1;
 	uint8_t	button3_old :1;
@@ -59,6 +45,7 @@ typedef enum Mode
 	SelectRate = 1,
 	SelectLedCurrent = 2
 } eMode;
+
 #define ButtonsModeNum		3
 eMode ButtonsMode = SelectMode;
 
@@ -81,17 +68,23 @@ void buttons_init()
 	gpio_pullup_en(PIN_BUTTON3);
 }
 
-void RenderPlot(uint8_t mode)
+void fetchButtontask(void * params)
 {
+  struct sButtonStates ButtonStates;
+  while (true)
+  {
+    ButtonStates.button1 = gpio_get_level(PIN_BUTTON1);
+    ButtonStates.button2 = gpio_get_level(PIN_BUTTON2);
+    ButtonStates.button3 = gpio_get_level(PIN_BUTTON3);
+
+    printf("waiting for button press %s\n", (char *) params);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+  }
 }
 
-void RenderResults(uint8_t mode)
-{
-}
-//
+
 void app_main()
 {
- //  int result;
    buttons_init();
 
    printf("Display init\n");
@@ -99,6 +92,10 @@ void app_main()
    ili9341_SetBL(100);
    ili9341_FillScreen(GREEN);
 
-//    dispcolor_Update();
-    vTaskDelay(20 / portTICK_RATE_MS);
+    while (1)
+    {
+
+	xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL);
+   	vTaskDelay(20 / portTICK_RATE_MS);
+   }
 }
