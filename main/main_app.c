@@ -99,8 +99,8 @@ void app_main()
    printf("Display init\n");
    ili9341_init(dispWidth, dispHeight);
    ili9341_SetBL(100);
-   ili9341_FillScreen(GREEN);
-   ili9341_TextOutput(20, 20, 0, BLACK, "Hello world!!!");
+   ili9341_FillScreen(BLACK);
+   ili9341_TextOutput(20, 20, 0, GREEN, "Hello world!!!");
 
     while (1)
     {
