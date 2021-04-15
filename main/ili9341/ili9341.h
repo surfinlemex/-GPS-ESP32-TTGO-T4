@@ -7,7 +7,7 @@
 #define ILI9341_DIRECT_MODE		0	// Direct-to-show mode (no frame buffer)
 #define ILI9341_BUFFER_MODE		1	// Mode to make changes to the frame buffer for later loading into the display
 
-#define ILI9341_MODE			ILI9341_BUFFER_MODE
+#define ILI9341_MODE			ILI9341_DIRECT_MODE
 
 
 
