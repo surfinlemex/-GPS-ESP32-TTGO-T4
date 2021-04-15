@@ -2,9 +2,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_system.h"
-//#include "ili9341/ili9341.h"
-#include "../display/dispcolor.h"
-#include "../display/fonts/font.h"
+#include "ili9341/ili9341.h"
+//#include "../display/dispcolor.h"
+//#include "../display/fonts/font.h"
 #include "console.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,20 +16,13 @@
 static uint8_t ConsoleLine = 0;
 
 
-//==============================================================================
-// Процедура делает паузу в выводе консоли
-//==============================================================================
 void console_pause(uint32_t timeMs)
 {
-    dispcolor_Update();
+//    dispcolor_Update();
     vTaskDelay(timeMs / portTICK_RATE_MS);
 }
-//==============================================================================
 
 
-//==============================================================================
-// Процедура добавляет новую строку в консоль
-//==============================================================================
 void console_printf(eConsoleMsgType msgType, const char *args, ...)
 {
 	char StrBuff[256];
@@ -53,7 +46,7 @@ void console_printf(eConsoleMsgType msgType, const char *args, ...)
 	vsnprintf(StrBuff, sizeof(StrBuff), args, ap);
 	va_end(ap);
 
-	dispcolor_DrawString(0, ConsoleLine * LineHeight, FONTID_6X8M, (uint8_t *)StrBuff, TextColor);
+//	dispcolor_DrawString(0, ConsoleLine * LineHeight, FONTID_6X8M, (uint8_t *)StrBuff, TextColor);
     printf("%s", StrBuff);
 
     if (msgType != MsgInfo)
@@ -63,16 +56,12 @@ void console_printf(eConsoleMsgType msgType, const char *args, ...)
     {
 		ConsoleLine = 0;
 		console_pause(300);
-        dispcolor_ClearScreen();
+//        dispcolor_ClearScreen();
     }
-    dispcolor_Update();
+//    dispcolor_Update();
 }
-//==============================================================================
 
 
-//==============================================================================
-// Процедура выводит сообщение о перезагрузке в консоль и перезагружает esp32
-//==============================================================================
 void FatalError()
 {
 	console_printf(MsgError, "Перезагрузка через 5 секунд...\r\n");
@@ -81,12 +70,8 @@ void FatalError()
     fflush(stdout);
     esp_restart();
 }
-//==============================================================================
 
 
-//==============================================================================
-// Процедура выводит сообщение об ошибке и о перезагрузке в консоль и перезагружает esp32
-//==============================================================================
 void FatalErrorMsg(const char *args, ...)
 {
 	char StrBuff[256];
@@ -99,4 +84,3 @@ void FatalErrorMsg(const char *args, ...)
 	console_printf(MsgError, "%s\r\n", StrBuff);
 	FatalError();
 }
-//==============================================================================
