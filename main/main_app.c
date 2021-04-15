@@ -7,6 +7,7 @@
 #include "console/console.h"
 #include "console/console.c"
 #include "ili9341/fonts/font.h"
+#include "ili9341/fonts/font.c"
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 #include "esp32/spiram.h"
