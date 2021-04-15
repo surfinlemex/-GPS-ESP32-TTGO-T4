@@ -395,7 +395,7 @@ void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color
 			ScreenBuff[(y + row) * _width + x + col] = color;
 	}
 }
-
+#endif
 
 // Procedure updates the display from the frame buffer
 void ili9341_update(void)
@@ -409,7 +409,7 @@ void ili9341_FillScreen(uint16_t color){
 	ili9341_FillRect(0, 0, ILI9341_TFTHEIGHT, ILI9341_TFTWIDTH, color);
 	ili9341_update();
 }
-#endif
+
 
 void ili9341_ClearScreen(void){
 	ili9341_FillScreen(BLACK);
