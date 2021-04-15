@@ -2,10 +2,11 @@
 set(COMPONENT_REQUIRES )
 set(COMPONENT_PRIV_REQUIRES )
 
-set(COMPONENT_SRCS 
-"main_app.c" 
-"ili9341/ili9341.c" 
+set(COMPONENT_SRCS
+"main_app.c"
+"ili9341/ili9341.c"
 "ili9341/fonts/font.c"
+"console/console.c"
 )
 
 set(COMPONENT_ADD_INCLUDEDIRS "." "console" "ili9341" "ili9341/fonts")
