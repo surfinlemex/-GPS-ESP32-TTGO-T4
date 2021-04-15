@@ -4,9 +4,16 @@
 #include <stdarg.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "driver/gpio.h"
 #include "console/console.h"
 //#include "console/console.c"
 #include "ili9341/fonts/font.h"
+#include "ili9341/fonts/f16f.h"
+#include "ili9341/fonts/f24f.h"
+#include "ili9341/fonts/f32f.h"
+#include "ili9341/fonts/f6x8m.h"
+
+
 //#include "ili9341/fonts/font.c"
 #include "esp_system.h"
 #include "esp_spi_flash.h"

@@ -6,6 +6,10 @@ set(COMPONENT_SRCS
 "main_app.c"
 "ili9341/ili9341.c"
 "ili9341/fonts/font.c"
+"ili9341/fonts/f16f.c"
+"ili9341/fonts/f24f.c"
+"ili9341/fonts/f32f.c"
+"ili9341/fonts/f6x8m.c"
 "console/console.c"
 )
 
