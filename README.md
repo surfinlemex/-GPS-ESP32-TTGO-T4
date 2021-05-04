@@ -2,6 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/31878095/111103954-c35b2700-8579-11eb-8a67-e59c4c10139d.png)
 ![image](https://user-images.githubusercontent.com/31878095/116801395-6b797f00-ab2b-11eb-824c-a04a0c49f790.png)
+![image](https://user-images.githubusercontent.com/31878095/117013195-755cd700-ad11-11eb-8207-c819f995bc89.png)
 
 Specifications:
 
