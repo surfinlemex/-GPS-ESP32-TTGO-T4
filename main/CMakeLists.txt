@@ -11,9 +11,10 @@ set(COMPONENT_SRCS
 "ili9341/fonts/f32f.c"
 "ili9341/fonts/f6x8m.c"
 "console/console.c"
+"wifi/wifi_manager.c"
 )
 
-set(COMPONENT_ADD_INCLUDEDIRS "." "console" "ili9341" "ili9341/fonts")
+set(COMPONENT_ADD_INCLUDEDIRS "." "console" "ili9341" "ili9341/fonts" "wifi")
 #set(COMPONENT_ADD_INCLUDEDIRS "console" "display" "display/fonts" "ili9341")
 
 
