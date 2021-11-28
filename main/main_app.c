@@ -110,8 +110,10 @@ void app_main()
    ili9341_TextOutput(20, 20, 0, RED, "Hello world!!!");
    ili9341_DrawCircle(100, 100, 60, GREEN);
 
-   xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL);
+//   xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 10, NULL);
+   xTaskCreate(fetchButtontask, "button fetching", 4096, NULL, 10, NULL);
   
+
   while (1)
   {
   }
