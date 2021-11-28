@@ -26,6 +26,7 @@
 #define SW_VERSION_MAJOR	1
 #define SW_VERSION_MINOR	0
 
+#define TASK1_TAG "TASK_1"
 
 // Screen size
 #define dispWidth	320
@@ -86,11 +87,11 @@ void fetchButtontask(void * params)
     ButtonStates.button2 = gpio_get_level(PIN_BUTTON2);
     ButtonStates.button3 = gpio_get_level(PIN_BUTTON3);
 
-    printf("waiting for button press %s\n", (char *) params);
+    ESP_LOGI("TASK_1","waiting for button press %s\n", (char *) params);
 //    vTaskDelay(1000 / portTICK_PERIOD_MS);
     vTaskDelay(1000 / portTICK_PERIOD_MS);
     if (uxTaskGetStackHighWaterMark(NULL) < 10)
-       printf("Close to running out of stack space!\n");
+       ESP_LOGW(TASK1_TAG,"Close to running out of stack space!\n");
   }
 }
 
