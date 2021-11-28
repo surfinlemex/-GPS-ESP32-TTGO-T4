@@ -89,7 +89,7 @@ void fetchButtontask(void * params)
 
     ESP_LOGI("TASK_1","waiting for button press %s\n", (char *) params);
 //    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    vTaskDelay(10000 / portTICK_PERIOD_MS);
     if (uxTaskGetStackHighWaterMark(NULL) < 10)
        ESP_LOGW(TASK1_TAG,"Close to running out of stack space!\n");
   }
@@ -110,8 +110,8 @@ void app_main()
    ili9341_TextOutput(20, 20, 0, RED, "Hello world!!!");
    ili9341_DrawCircle(100, 100, 60, GREEN);
 
-   xTaskCreatePinnedToCore(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL,2);
-//   xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL);
+//   xTaskCreatePinnedToCore(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL,2);
+   xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL);
 //   xTaskCreate(&fetchButtontask, "button fetching", 2048, NULL, tskIDLE_PRIORITY, NULL);
   
 
