@@ -87,7 +87,7 @@ void fetchButtontask(void * params)
     ButtonStates.button3 = gpio_get_level(PIN_BUTTON3);
 
     printf("waiting for button press %s\n", (char *) params);
-    vTaskDelay(100 / portTICK_PERIOD_MS);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
   }
 }
 
