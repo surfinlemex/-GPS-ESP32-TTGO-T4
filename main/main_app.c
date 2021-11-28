@@ -12,7 +12,7 @@
 #include "ili9341/fonts/f24f.h"
 #include "ili9341/fonts/f32f.h"
 #include "ili9341/fonts/f6x8m.h"
-
+#include "esp_log.h"
 
 //#include "ili9341/fonts/font.c"
 #include "esp_system.h"
