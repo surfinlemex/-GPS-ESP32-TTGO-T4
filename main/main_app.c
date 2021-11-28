@@ -103,12 +103,12 @@ void app_main()
    ili9341_DrawPixel(100, 100, BLUE);
    ili9341_DrawPixel(100, 200, YELLOW);
 
-//   ili9341_TextOutput(20, 20, 0, RED, "Hello world!!!");
+   ili9341_TextOutput(20, 20, 0, RED, "Hello world!!!");
    ili9341_DrawCircle(100, 100, 60, GREEN);
-    while (1)
-    {
 
-	xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL);
-   	vTaskDelay(20 / portTICK_RATE_MS);
-   }
+   xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL);
+  
+  while (1)
+  {
+  }
 }
