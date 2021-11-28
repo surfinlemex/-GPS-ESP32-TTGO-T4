@@ -26,18 +26,18 @@ void console_pause(uint32_t timeMs)
 void console_printf(eConsoleMsgType msgType, const char *args, ...)
 {
 	char StrBuff[256];
-	uint16_t TextColor = WHITE;
+//	uint16_t TextColor = WHITE;
 
 	switch (msgType)
 	{
 	case MsgInfo:
-		TextColor = GREEN;
+//		TextColor = GREEN;
 		break;
 	case MsgWarning:
-		TextColor = RGB565(249, 166, 2);
+//		TextColor = RGB565(249, 166, 2);
 		break;
 	case MsgError:
-		TextColor = RED;
+//		TextColor = RED;
 		break;
 	}
 
