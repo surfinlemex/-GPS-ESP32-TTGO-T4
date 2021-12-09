@@ -13,6 +13,7 @@
 #include "ili9341/fonts/f32f.h"
 #include "ili9341/fonts/f6x8m.h"
 #include "esp_log.h"
+#include "esp_system.h"
 
 //#include "ili9341/fonts/font.c"
 #include "esp_system.h"
@@ -38,6 +39,8 @@
 #define PIN_BUTTON3	38
 
 #define BUFF_SIZE	dispWidth
+
+static const char TAG[] = "main";
 
 struct sButtonStates
 {
@@ -77,6 +80,15 @@ void buttons_init()
 	gpio_set_direction(PIN_BUTTON3, GPIO_MODE_INPUT);
 	gpio_pullup_en(PIN_BUTTON3);
 }
+void monitoring_task(void *pvParameter)
+{
+	for(;;){
+		ESP_LOGI(TAG, "free heap: %d",esp_get_free_heap_size());
+		vTaskDelay( pdMS_TO_TICKS(10000) );
+	}
+}
+
+
 
 void fetchButtontask(void * params)
 {
@@ -114,6 +126,7 @@ void app_main()
    xTaskCreate(&fetchButtontask, "button fetching", 2048, "task 1", 2, NULL);
 //   xTaskCreate(&fetchButtontask, "button fetching", 2048, NULL, tskIDLE_PRIORITY, NULL);
   
+   xTaskCreatePinnedToCore(&monitoring_task, "monitoring_task", 2048, NULL, 1, NULL, 1);
 
   while (1)
   {
