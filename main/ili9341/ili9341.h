@@ -91,6 +91,8 @@
 
 void ili9341_init(uint16_t width, uint16_t height);
 void ili9341_SetBL(uint8_t value);
+void ili9341_turn_Off();
+void ili9341_turn_On();
 void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color);
 void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
 void ili9341_FillScreen(uint16_t color);
