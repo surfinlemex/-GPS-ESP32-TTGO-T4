@@ -91,6 +91,8 @@
 
 void ili9341_init(uint16_t width, uint16_t height);
 void ili9341_SetBL(uint8_t value);
+void ili9341_turn_Off();
+void ili9341_turn_On();
 void ili9341_DrawPixel(int16_t x, int16_t y, uint16_t color);
 void ili9341_FillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
 void ili9341_FillScreen(uint16_t color);
@@ -100,8 +102,8 @@ void ili9341_DrawCircle(int16_t x0, int16_t y0, int16_t radius, uint16_t color);
 void ili9341_DrawRectangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t color);
 void ili9341_DrawRectangleFilled(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint16_t fillcolor);
 int16_t ili9341_TextOutput(int16_t X, int16_t Y, uint8_t FontID, uint16_t TextColor, const char *args, ...);
-static int16_t ili9341_DrawString_General(int16_t X, int16_t Y, uint8_t FontID, uint8_t *Str, uint16_t TextColor, uint16_t BgColor, uint8_t TransparentBg);
-static uint8_t ili9341_DrawChar_General(int16_t X, int16_t Y, uint8_t FontID, uint8_t Char, uint16_t TextColor, uint16_t BgColor, uint8_t TransparentBg);
+//static int16_t ili9341_DrawString_General(int16_t X, int16_t Y, uint8_t FontID, uint8_t *Str, uint16_t TextColor, uint16_t BgColor, uint8_t TransparentBg);
+//static uint8_t ili9341_DrawChar_General(int16_t X, int16_t Y, uint8_t FontID, uint8_t Char, uint16_t TextColor, uint16_t BgColor, uint8_t TransparentBg);
 
 #if (ILI9341_MODE == ILI9341_BUFFER_MODE)
 void ili9341_update(void);

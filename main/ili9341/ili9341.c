@@ -165,6 +165,17 @@ void lcd_spi_pre_transfer_callback(spi_transaction_t *t)
     gpio_set_level(PIN_DC, dc);
 }
 
+void ili9341_On()
+{
+    lcd_cmd(ILI9341_SLPOUT);
+    lcd_cmd(ILI9341_DISPON);
+}
+
+void ili9341_Off()
+{
+    lcd_cmd(ILI9341_SLPIN);
+    lcd_cmd(ILI9341_DISPOFF);
+}
 
 // Set windows size for memory
 void ili9341_setWindow(uint16_t x, uint16_t y, uint16_t x_end, uint16_t y_end)
