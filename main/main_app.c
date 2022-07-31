@@ -22,7 +22,9 @@
 #include "ili9341/ili9341.h"
 //#include "ili9341/ili9341.c"
 #include "esp32/himem.h"
+#include "esp_wifi.h"
 
+#define SSID "ESP32AP"
 
 #define SW_VERSION_MAJOR	1
 #define SW_VERSION_MINOR	0
@@ -127,6 +129,30 @@ void app_main()
 //   xTaskCreate(&fetchButtontask, "button fetching", 2048, NULL, tskIDLE_PRIORITY, NULL);
   
    xTaskCreatePinnedToCore(&monitoring_task, "monitoring_task", 2048, NULL, 1, NULL, 1);
+
+
+    wifi_init_config_t wifiInitializationConfig = WIFI_INIT_CONFIG_DEFAULT();
+ 
+    esp_wifi_init(&wifiInitializationConfig);
+ 
+    esp_wifi_set_storage(WIFI_STORAGE_RAM);
+ 
+    esp_wifi_set_mode(WIFI_MODE_AP);
+ 
+    wifi_config_t ap_config = {
+          .ap = {
+            .ssid = SSID,
+            .channel = 0,
+            .authmode = WIFI_AUTH_OPEN,
+            .ssid_hidden = 0,
+            .max_connection = 1,
+            .beacon_interval = 100
+          }
+        };
+ 
+    esp_wifi_set_config(WIFI_IF_AP, &ap_config);
+ 
+    esp_wifi_start();
 
   while (1)
   {
